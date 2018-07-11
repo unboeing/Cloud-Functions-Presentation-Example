@@ -341,14 +341,18 @@ class ViewController: UIViewController {
     }
     
     @IBAction func addCityButtonTapped(_ sender: UIButton) {
-        var ref: DocumentReference? = nil
-        ref = Firestore.firestore()
-            .collection("cities").addDocument(data: ["name": cityNameTextField.text!]) { error in
-                if error != nil {
-                    print("Error uploading new city. \(error!.localizedDescription)")
-                } else {
-                    print("City \(self.cityNameTextField.text!) added with id \(ref!.documentID)")
-                }
+        if cityNameTextField.text != "" {            
+            var ref: DocumentReference? = nil
+            ref = Firestore.firestore()
+                .collection("cities").addDocument(data: ["name": cityNameTextField.text!]) { error in
+                    if error != nil {
+                        print("Error uploading new city. \(error!.localizedDescription)")
+                    } else {
+                        print("City \(self.cityNameTextField.text!) added with id \(ref!.documentID)")
+                    }
+            }
+            cityNameTextField.text = ""
+            cityNameTextField.resignFirstResponder()
         }
     }   
 }
